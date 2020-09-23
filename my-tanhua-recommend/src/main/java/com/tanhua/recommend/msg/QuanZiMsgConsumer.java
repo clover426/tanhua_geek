@@ -45,8 +45,7 @@ public class QuanZiMsgConsumer implements RocketMQListener<String> {
             recommendQuanZi.setId(ObjectId.get());
             recommendQuanZi.setUserId(userId);
 
-            // 1 ~ 发动态，2 ~ 浏览动态， 3 ~ 点赞， 4 ~ 喜欢， 5 ~ 评论，6 ~ 取消点赞，7 ~ 取消喜欢
-
+            // 1 ~ 发动态，2 ~ 浏览动态， 3 ~ 点赞， 4 ~ 喜欢， 5 ~ 评论，6 ~ 取消点赞，7 ~ 取消喜欢。
             switch (type) {
                 case 1: {
                     int score = 0;
@@ -97,13 +96,12 @@ public class QuanZiMsgConsumer implements RocketMQListener<String> {
                     recommendQuanZi.setScore(0d);
                     break;
                 }
-
             }
             // 将数据写入到 MongoDB。
             String collectName = "recommend_quanzi_" + new DateTime().toString("yyyyMMdd");
             this.mongoTemplate.save(recommendQuanZi, collectName);
         } catch (Exception e) {
-            LOGGER.error("消息处理失败! msg = " + msg);
+            LOGGER.error("消息处理失败 ~ msg = " + msg);
         }
     }
 

@@ -63,7 +63,6 @@ public class ESUserLocationApiImpl implements IUserLocationApi {
         if (responseEntity.getStatusCodeValue() != 200) {
             return null;
         }
-
         try {
             String body = responseEntity.getBody();
             JsonNode jsonNode = MAPPER.readTree(body);
@@ -126,4 +125,5 @@ public class ESUserLocationApiImpl implements IUserLocationApi {
         }
         return null;
     }
+
 }

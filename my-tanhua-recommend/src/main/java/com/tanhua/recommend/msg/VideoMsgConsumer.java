@@ -34,7 +34,7 @@ public class VideoMsgConsumer implements RocketMQListener<String> {
             Long vid = jsonNode.get("vid").asLong();
             Integer type = jsonNode.get("type").asInt();
 
-            // 1 ~ 发动态，2 ~ 点赞， 3 ~ 取消点赞，4 ~ 评论
+            // 1 ~ 发动态，2 ~ 点赞， 3 ~ 取消点赞，4 ~ 评论。
             RecommendVideo recommendVideo = new RecommendVideo();
             recommendVideo.setUserId(userId);
             recommendVideo.setId(ObjectId.get());
@@ -66,7 +66,7 @@ public class VideoMsgConsumer implements RocketMQListener<String> {
             String collectionName = "recommend_video_" + new DateTime().toString("yyyyMMdd");
             this.mongoTemplate.save(recommendVideo, collectionName);
         } catch (Exception e) {
-            LOGGER.error("处理小视频消息失败~" + msg, e);
+            LOGGER.error("处理小视频消息失败 ~ " + msg, e);
         }
     }
 

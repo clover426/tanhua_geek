@@ -111,7 +111,7 @@ public class QuanziMQService {
 
             this.rocketMQTemplate.convertAndSend("tanhua-quanzi", msg);
         } catch (Exception e) {
-            LOGGER.error("圈子消息发送失效！ type = " + type + ", publishId = " + publishId, e);
+            LOGGER.error("圈子消息发送失效 ~ type = " + type + ", publishId = " + publishId, e);
         }
     }
 

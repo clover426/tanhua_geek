@@ -86,7 +86,7 @@ public class VideoMQService {
 
             this.rocketMQTemplate.convertAndSend("tanhua-video", msg);
         } catch (Exception e) {
-            LOGGER.error("发送消息失败。videoId = " + videoId + ", type = " + type, e);
+            LOGGER.error("发送消息失败 ~ videoId = " + videoId + ", type = " + type, e);
             return false;
         }
         return true;

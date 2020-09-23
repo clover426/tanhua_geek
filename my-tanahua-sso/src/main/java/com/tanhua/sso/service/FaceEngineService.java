@@ -68,8 +68,8 @@ public class FaceEngineService {
         int initCode = faceEngine.init(engineConfiguration);
 
         if (initCode != ErrorInfo.MOK.getValue()) {
-            LOGGER.error("初始化引擎出错!");
-            throw new RuntimeException("初始化引擎出错!");
+            LOGGER.error("初始化引擎出错。");
+            throw new RuntimeException("初始化引擎出错。");
         }
 
         this.faceEngine = faceEngine;

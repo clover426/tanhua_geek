@@ -65,7 +65,7 @@ public class UserInfoService {
                 return false;
             }
         } catch (Exception e) {
-            LOGGER.error("检测人像图片出错!", e);
+            LOGGER.error("检测人像图片出错 ~ ", e);
             return false;
         }
         // 图片上传到阿里云 OSS。

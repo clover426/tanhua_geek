@@ -60,7 +60,7 @@ public class SmsService {
             this.redisTemplate.opsForValue().set(redisKey, code, Duration.ofMinutes(2));
             return result;
         } catch (Exception e) {
-            LOGGER.error("发送验证码出错！" + mobile, e);
+            LOGGER.error("发送验证码出错 ~ " + mobile, e);
             result.put("code", 4);
             result.put("msg", "发送验证码出现异常");
             return result;
