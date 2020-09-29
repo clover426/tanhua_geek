@@ -29,8 +29,7 @@ public class PicUploadService {
         // 图片做校验，对后缀名。
         boolean isLegal = false;
         for (String type : IMAGE_TYPE) {
-            if (StringUtils.endsWithIgnoreCase(uploadFile.getOriginalFilename(),
-                    type)) {
+            if (StringUtils.endsWithIgnoreCase(uploadFile.getOriginalFilename(), type)) {
                 isLegal = true;
                 break;
             }
@@ -46,8 +45,7 @@ public class PicUploadService {
         // 上传到阿里云。
         try {
             // 目录结构：images/2020/12/29/xxxx.jpg
-            ossClient.putObject(aliyunConfig.getBucketName(), filePath, new
-                    ByteArrayInputStream(uploadFile.getBytes()));
+            ossClient.putObject(aliyunConfig.getBucketName(), filePath, new ByteArrayInputStream(uploadFile.getBytes()));
         } catch (Exception e) {
             e.printStackTrace();
             // 上传失败。
@@ -67,9 +65,9 @@ public class PicUploadService {
         DateTime dateTime = new DateTime();
         return "images/" + dateTime.toString("yyyy")
                 + "/" + dateTime.toString("MM") + "/"
-                + dateTime.toString("dd") + "/" + System.currentTimeMillis() +
-                RandomUtils.nextInt(100, 9999) + "." +
-                StringUtils.substringAfterLast(sourceFileName, ".");
+                + dateTime.toString("dd") + "/" + System.currentTimeMillis()
+                + RandomUtils.nextInt(100, 9999) + "."
+                + StringUtils.substringAfterLast(sourceFileName, ".");
     }
 
 }

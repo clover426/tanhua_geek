@@ -30,7 +30,7 @@ public class SmsService {
     private RedisTemplate<String, String> redisTemplate;
 
     /**
-     * 发送验证码。
+     * 发送验证码。并存储到 Redis。
      *
      * @param mobile
      * @return
@@ -49,7 +49,7 @@ public class SmsService {
             String code = "123456";
             if (null == code) {
                 result.put("code", 2);
-                result.put("msg", "发送短信验证码失败");
+                result.put("msg", "发送短信验证码失败。");
                 return result;
             }
             // 发送验证码成功。
@@ -62,7 +62,7 @@ public class SmsService {
         } catch (Exception e) {
             LOGGER.error("发送验证码出错 ~ " + mobile, e);
             result.put("code", 4);
-            result.put("msg", "发送验证码出现异常");
+            result.put("msg", "发送验证码出现异常。");
             return result;
         }
     }
@@ -71,14 +71,15 @@ public class SmsService {
      * 发送验证码短信。
      *
      * @param mobile
+     * @return
      */
     public String sendSms(String mobile) {
         String url = "https://open.ucpaas.com/ol/sms/sendsms";
         Map<String, Object> params = new HashMap<>();
-        params.put("sid", "56f6523e8f50c85fe92d5d12a8dabd6f");
-        params.put("token", "41fabadd9a221ab4a439548b4dc88433");
-        params.put("appid", "dd7d74e604284a6b9cc668c6591c84c7");
-        params.put("templateid", "487656");
+        params.put("sid", "8d76470647c2aac95f2b37be153eccb5");
+        params.put("token", "bc28969347578748c40cb84262c39bfe");
+        params.put("appid", "66882e6c05ca49269bb6e02fca74db33");
+        params.put("templateid", "567772");
         params.put("mobile", mobile);
         // 生成 6 位数验证。
         params.put("param", RandomUtils.nextInt(100000, 999999));

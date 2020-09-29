@@ -6,6 +6,9 @@ public class UserThreadLocal {
 
     private static final ThreadLocal<User> LOCAL = new ThreadLocal<>();
 
+    /**
+     * 构造方法私有化。
+     */
     private UserThreadLocal() {
 
     }

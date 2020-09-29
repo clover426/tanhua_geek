@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 
-@MapperScan("com.tanhua.server.mapper") //设置mapper接口的扫描包
+@MapperScan("com.tanhua.server.mapper")// 设置 mapper 接口的扫描包。
 @SpringBootApplication(exclude = {MongoAutoConfiguration.class, MongoDataAutoConfiguration.class})
 public class ServerApplication {
 

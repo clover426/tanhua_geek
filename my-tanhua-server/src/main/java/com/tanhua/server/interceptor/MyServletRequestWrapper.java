@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- * 包装HttpServletRequest
+ * 包装 HttpServletRequest。
  */
 public class MyServletRequestWrapper extends HttpServletRequestWrapper {
 
@@ -28,7 +28,7 @@ public class MyServletRequestWrapper extends HttpServletRequestWrapper {
     }
 
     @Override
-    public BufferedReader getReader() throws IOException {
+    public BufferedReader getReader() {
         return new BufferedReader(new InputStreamReader(getInputStream()));
     }
 
@@ -79,10 +79,10 @@ public class MyServletRequestWrapper extends HttpServletRequestWrapper {
         @Override
         public void setReadListener(ReadListener listener) {
             if (listener == null) {
-                throw new IllegalArgumentException("listener cann not be null");
+                throw new IllegalArgumentException("listener cann not be null.");
             }
             if (this.listener != null) {
-                throw new IllegalArgumentException("listener has been set");
+                throw new IllegalArgumentException("listener has been set.");
             }
             this.listener = listener;
             if (!isFinished()) {

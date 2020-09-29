@@ -19,17 +19,16 @@ public class TestTodayBest {
 
     @Test
     public void testQueryTodayBest() {
-        String token = "eyJhbGciOiJIUzI1NiJ9.eyJtb2JpbGUiOiIxNzYwMjAyNjg2OCIsImlkIjoxfQ.OzoVY9yavYS-albcNGlYg1kKK2pp3QffrmcopfI3IhY";
-        TodayBest todayBest = this.todayBestService.queryTodayBest();
+        String token = "eyJhbGciOiJIUzI1NiJ9.eyJtb2JpbGUiOiIxNTYyOTE5MzcxNiIsImlkIjoxMDB9.vLu0gzfZAsq7qdLrAi_HAXYjIEgQ8GJHawPcQDSbGZI";
+        TodayBest todayBest = this.todayBestService.queryTodayBest(token);
         System.out.println(todayBest);
     }
 
     @Test
     public void testQueryTodayBestList() {
         String token = "eyJhbGciOiJIUzI1NiJ9.eyJtb2JpbGUiOiIxNzYwMjAyNjg2OCIsImlkIjoxfQ.OzoVY9yavYS-albcNGlYg1kKK2pp3QffrmcopfI3IhY";
-        PageResult pageResult = this.todayBestService.queryRecommendUserList(new RecommendUserQueryParam());
+        PageResult pageResult = this.todayBestService.queryRecommendUserList(new RecommendUserQueryParam(), token);
         System.out.println(pageResult);
     }
-
 
 }

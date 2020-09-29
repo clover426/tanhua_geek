@@ -16,6 +16,8 @@ public interface IQuanZiApi {
      */
     String savePublish(Publish publish);
 
+    boolean savePublishBool(Publish publish);
+
     /**
      * 查询好友动态。
      *

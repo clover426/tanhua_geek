@@ -14,7 +14,7 @@ public class RecommendUserService {
     private IRecommendUserApi recommendUserApi;
 
     public TodayBest queryTodayBest(Long userId) {
-        RecommendUser recommendUser = this.recommendUserApi.queryWithMaxScore(userId);
+        RecommendUser recommendUser = this.recommendUserApi.queryMaxScore(userId);
         if (null == recommendUser) {
             return null;
         }

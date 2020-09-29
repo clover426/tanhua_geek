@@ -6,6 +6,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
+/**
+ * 自动填充。
+ */
 @Component
 public class MyMetaObjectHandler implements MetaObjectHandler {
 
@@ -26,7 +29,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
 
     @Override
     public void updateFill(MetaObject metaObject) {
-        // 更新数据时，直接更新字段。
+        // 更新数据时，直接更新字段。不为空也要自动更新。
         setFieldValByName("updated", new Date(), metaObject);
     }
 

@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
-@RequestMapping("user")
 @RestController
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @PostMapping("loginVerification")
+    @PostMapping("/loginVerification")
     public ResponseEntity<Object> login(@RequestBody Map<String, String> param) {
         try {
             String mobile = param.get("phone");
@@ -28,10 +28,10 @@ public class UserController {
 
             if (StringUtils.isNotEmpty(token)) {
                 // 登录成功。
-                String[] ss = StringUtils.split(token, '|');
+                String[] ss = StringUtils.split(token, " ~ ");
                 Boolean isNew = Boolean.valueOf(ss[0]);
                 String tokenStr = ss[1];
-
+                // 封装对象。
                 Map<String, Object> result = new HashMap<>();
                 result.put("isNew", isNew);
                 result.put("token", tokenStr);
@@ -42,7 +42,7 @@ public class UserController {
             e.printStackTrace();
         }
 
-        ErrorResult.ErrorResultBuilder builder = ErrorResult.builder().errCode("000000").errMessage("登录失败");
+        ErrorResult.ErrorResultBuilder builder = ErrorResult.builder().errCode("000000").errMessage("登录失败。");
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(builder.build());
     }
 
@@ -58,3 +58,4 @@ public class UserController {
     }
 
 }
+

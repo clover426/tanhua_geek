@@ -8,7 +8,6 @@ import com.tanhua.dubbo.server.api.IVisitorsApi;
 import com.tanhua.dubbo.server.pojo.UserLike;
 import com.tanhua.dubbo.server.pojo.Visitors;
 import com.tanhua.dubbo.server.vo.PageInfo;
-import com.tanhua.server.enums.SexEnum;
 import com.tanhua.server.pojo.*;
 import com.tanhua.server.utils.UserThreadLocal;
 import com.tanhua.server.vo.*;
@@ -75,18 +74,19 @@ public class UsersService {
     }
 
     public Boolean updateUserInfo(UserInfoVo userInfoVo) {
-        User user = UserThreadLocal.get();
-        UserInfo userInfo = new UserInfo();
-        userInfo.setUserId(user.getId());
-        userInfo.setAge(Integer.valueOf(userInfoVo.getAge()));
-        userInfo.setSex(StringUtils.equalsIgnoreCase(userInfoVo.getGender(), "man") ? SexEnum.MAN : SexEnum.WOMAN);
-        userInfo.setBirthday(userInfoVo.getBirthday());
-        userInfo.setCity(userInfoVo.getCity());
-        userInfo.setEdu(userInfoVo.getEducation());
-        userInfo.setIncome(StringUtils.replaceAll(userInfoVo.getIncome(), "K", ""));
-        userInfo.setIndustry(userInfoVo.getProfession());
-        userInfo.setMarriage(userInfoVo.getMarriage() == 1 ? "已婚" : "未婚");
-        return this.userInfoService.updateUserInfoByUserId(userInfo);
+//        User user = UserThreadLocal.get();
+//        UserInfo userInfo = new UserInfo();
+//        userInfo.setUserId(user.getId());
+//        userInfo.setAge(Integer.valueOf(userInfoVo.getAge()));
+//        userInfo.setSex(StringUtils.equalsIgnoreCase(userInfoVo.getGender(), "man") ? SexEnum.MAN : SexEnum.WOMAN);
+//        userInfo.setBirthday(userInfoVo.getBirthday());
+//        userInfo.setCity(userInfoVo.getCity());
+//        userInfo.setEdu(userInfoVo.getEducation());
+//        userInfo.setIncome(StringUtils.replaceAll(userInfoVo.getIncome(), "K", ""));
+//        userInfo.setIndustry(userInfoVo.getProfession());
+//        userInfo.setMarriage(userInfoVo.getMarriage() == 1 ? "已婚" : "未婚");
+//        return this.userInfoService.updateUserInfoByUserId(userInfo);
+        return true;
     }
 
     public CountsVo queryCounts() {

@@ -21,7 +21,7 @@ public class UserLocation implements java.io.Serializable {
     private ObjectId id;
     @Indexed
     private Long userId;// 用户 id。
-    private GeoJsonPoint location;// x:经度 y:纬度。
+    private GeoJsonPoint location;// x ~ 经度 y ~ 纬度。
     private String address;// 位置描述。
     private Long created;// 创建时间。
     private Long updated;// 更新时间。

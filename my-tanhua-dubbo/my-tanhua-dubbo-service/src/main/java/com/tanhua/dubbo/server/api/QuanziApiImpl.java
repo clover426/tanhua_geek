@@ -18,7 +18,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service(version = "1.0.0")
+@Service(version = "1.0.0")// com.alibaba.dubbo.config.annotation.Service;
 public class QuanziApiImpl implements IQuanZiApi {
 
     @Autowired
@@ -26,6 +26,57 @@ public class QuanziApiImpl implements IQuanZiApi {
 
     @Autowired
     private IdService idService;
+
+    @Override
+    public boolean savePublishBool(Publish publish) {
+        // 校验 publish 对象。
+        if (publish.getUserId() == null) {
+            return false;
+        }
+        // 其他的逻辑类似。
+
+        try {
+            // 填充数据。
+            publish.setId(ObjectId.get());
+            publish.setCreated(System.currentTimeMillis());// 发布时间。
+            publish.setSeeType(1);// 查看权限。
+
+            // 增加自增长的 pid。
+            publish.setPid(this.idService.createId("publish", publish.getId().toHexString()));
+
+            // 保存动态信息。
+            this.mongoTemplate.save(publish);
+
+            // 写入到自己的相册表中。
+            Album album = new Album();
+            album.setId(ObjectId.get());
+            album.setPublishId(publish.getId());// 动态 id。
+            album.setCreated(System.currentTimeMillis());
+
+            // 将相册对象写入到 MongoDB 中。每个人都有自己的相册表。
+            this.mongoTemplate.save(album, "quanzi_album_" + publish.getUserId());
+
+            // 查询当前用户的好友数据，将动态数据写入到好友的时间线表中。
+            Query query = Query.query(Criteria.where("userId").is(publish.getUserId()));
+            List<Users> friends = this.mongoTemplate.find(query, Users.class);
+            for (Users user : friends) {
+                TimeLine timeLine = new TimeLine();
+                timeLine.setId(ObjectId.get());
+                timeLine.setUserId(publish.getUserId());// 我。（发表人的 id。）
+                timeLine.setPublishId(publish.getId());
+                timeLine.setDate(System.currentTimeMillis());
+
+                // 写入好友的时间线表。
+                this.mongoTemplate.save(timeLine, "quanzi_time_line_" + user.getFriendId());
+            }
+
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            // todo 事务回滚。
+        }
+        return false;
+    }
 
     @Override
     public String savePublish(Publish publish) {
@@ -71,7 +122,7 @@ public class QuanziApiImpl implements IQuanZiApi {
             return publish.getId().toHexString();
         } catch (Exception e) {
             e.printStackTrace();
-            //TODO 事务回滚
+            // TODO 事务回滚。
         }
         return null;
     }

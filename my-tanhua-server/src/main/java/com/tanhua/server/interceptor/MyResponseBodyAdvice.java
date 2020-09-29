@@ -15,6 +15,15 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 import java.time.Duration;
 
+
+/**
+ * RedisCacheInterceptor 完成了缓存命中逻辑。
+ * 在查到数据后，如何将结果写入缓存？
+ * 不能通过拦截器实现。拦截器有 3 个执行节点：执行 Controller 之前，之后，完成之后。完成之后就已经完成了视图渲染。
+ * 不能拿到响应结果了。
+ * 那就通过 ResponseBodyAdvice 实现。Spring 提供的高级用法。
+ * controller 执行返回结果前。会在结果被处理前进行拦截。拦截的逻辑自己实现。
+ */
 @ControllerAdvice
 public class MyResponseBodyAdvice implements ResponseBodyAdvice {
 
@@ -22,17 +31,37 @@ public class MyResponseBodyAdvice implements ResponseBodyAdvice {
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
 
+    /**
+     * @param methodParameter returnGType。
+     * @param aClass          converterType。
+     * @return
+     */
     @Override
-    public boolean supports(MethodParameter returnType, Class converterType) {
+    public boolean supports(MethodParameter methodParameter, Class aClass) {
+//        return false;
         // 支持的处理类型，这里仅对 get 和 post 进行处理。
-        return returnType.hasMethodAnnotation(GetMapping.class) || returnType.hasMethodAnnotation(PostMapping.class);
+        return methodParameter.hasMethodAnnotation(GetMapping.class) || methodParameter.hasMethodAnnotation(PostMapping.class);
     }
 
+    /**
+     * 渲染给前端之前的处理。
+     *
+     * @param body
+     * @param methodParameter
+     * @param mediaType
+     * @param aClass
+     * @param serverHttpRequest
+     * @param serverHttpResponse
+     * @return
+     */
     @Override
-    public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
+    public Object beforeBodyWrite(Object body, MethodParameter methodParameter, MediaType mediaType, Class aClass, ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
+//        return null;
+        String redisKey = null;
         try {
-            String redisKey = RedisCacheInterceptor.createRedisKey(((ServletServerHttpRequest) request).getServletRequest());
+            redisKey = RedisCacheInterceptor.createRedisKey(((ServletServerHttpRequest) serverHttpRequest).getServletRequest());
             String redisValue;
+            // 如果不是字符串，序列化为 json。
             if (body instanceof String) {
                 redisValue = (String) body;
             } else {

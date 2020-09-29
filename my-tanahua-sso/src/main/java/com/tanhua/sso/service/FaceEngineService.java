@@ -38,11 +38,13 @@ public class FaceEngineService {
 
     @PostConstruct
     public void init() {
-        // 激活并且初始化引擎。
+
         FaceEngine faceEngine = new FaceEngine(libPath);
+        // 激活引擎。
         int activeCode = faceEngine.activeOnline(appId, sdkKey);
+
         if (activeCode != ErrorInfo.MOK.getValue() && activeCode != ErrorInfo.MERR_ASF_ALREADY_ACTIVATED.getValue()) {
-            LOGGER.error("引擎激活失败。");
+            System.out.println("引擎激活失败。");
             throw new RuntimeException("引擎激活失败。");
         }
 
@@ -84,7 +86,7 @@ public class FaceEngineService {
     public boolean checkIsPortrait(ImageInfo imageInfo) {
         // 定义人脸列表。
         List<FaceInfo> faceInfoList = new ArrayList<FaceInfo>();
-        faceEngine.detectFaces(imageInfo.getImageData(), imageInfo.getWidth(), imageInfo.getHeight(), ImageFormat.CP_PAF_BGR24, faceInfoList);
+        int detectFaces = faceEngine.detectFaces(imageInfo.getImageData(), imageInfo.getWidth(), imageInfo.getHeight(), ImageFormat.CP_PAF_BGR24, faceInfoList);
         return !faceInfoList.isEmpty();
     }
 

@@ -20,10 +20,22 @@ public class TodayBestController {
     @Autowired
     private TodayBestService todayBestService;
 
+//    @GetMapping("todayBest")
+//    public TodayBest queryTodayBest(@RequestHeader("Authorization") String token) {
+//        return this.todayBestService.queryTodayBest(token);
+//    }
+
     @GetMapping("todayBest")
     public TodayBest queryTodayBest() {
         return this.todayBestService.queryTodayBest();
     }
+
+//    @GetMapping("recommendation")
+//    public PageResult queryRecommendUserList(RecommendUserQueryParam queryParam,
+//                                             @RequestHeader("Authorization") String token) {
+//        return this.todayBestService.queryRecommendUserList(queryParam, token);
+////        return this.todayBestService.queryRecommendUserList(queryParam);
+//    }
 
     @GetMapping("recommendation")
     public PageResult queryRecommendUserList(RecommendUserQueryParam queryParam) {

@@ -16,7 +16,7 @@ public class TestRecommendUserApi {
 
     @Test
     public void testQueryWithMaxScore() {
-        RecommendUser recommendUser = this.recommendUserApi.queryWithMaxScore(1L);
+        RecommendUser recommendUser = this.recommendUserApi.queryMaxScore(1L);
         System.out.println(recommendUser);
     }
 

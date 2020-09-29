@@ -26,15 +26,15 @@ public class RedisCacheInterceptor implements HandlerInterceptor {
     @Value("${tanhua.cache.enable}")
     private Boolean enable;
 
-    public static String createRedisKey(HttpServletRequest request) throws
-            Exception {
+    public static String createRedisKey(HttpServletRequest request) throws Exception {
         String paramStr = request.getRequestURI();
+        // get 请求可以从？获取参数。
         Map<String, String[]> parameterMap = request.getParameterMap();
-        if (parameterMap.isEmpty()) {
+        if (parameterMap.isEmpty()) {// 获取不到，是 post 请求。
             // 请求体的数据只能读取一次，需要进行包装 Request 进行解决。
             paramStr += IOUtils.toString(request.getInputStream(), StandardCharsets.UTF_8);
-        } else {
-            paramStr += mapper.writeValueAsString(request.getParameterMap());
+        } else {// get 请求可以从？获取参数。
+            paramStr += mapper.writeValueAsString(request.getParameterMap());// 序列化转为 json。
         }
 
         String authorization = request.getHeader("Authorization");
@@ -49,12 +49,13 @@ public class RedisCacheInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if (!enable) {
             // 未开启缓存。
-            return true;
+            return true;// 直接放行。
         }
 
         String method = request.getMethod();
-        if (!StringUtils.equalsAnyIgnoreCase(method, "GET", "POST")) {
-            // 非GET、POST的请求不进行缓存处理
+//        if (!StringUtils.equalsAnyIgnoreCase(method, "GET", "POST")) {
+        if ("GET".equalsIgnoreCase(method) || "POST".equalsIgnoreCase(method)) {
+            // 非 GET、POST 的请求不进行缓存处理。
             return true;
         }
 
@@ -71,7 +72,7 @@ public class RedisCacheInterceptor implements HandlerInterceptor {
         response.setContentType("application/json; charset=utf-8");
         response.getWriter().write(data);
 
-        return false;
+        return false;// 不会去查询数据库 MySQL MongoDB 了。
     }
 
 }

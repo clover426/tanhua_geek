@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
+
 @Service
 public class UserService {
 
@@ -15,6 +17,7 @@ public class UserService {
 
     @Autowired
     private RestTemplate restTemplate;
+
     @Value("${tanhua.sso.url}")
     private String url;
 
@@ -28,8 +31,8 @@ public class UserService {
         String jsonData = this.restTemplate.getForObject(url + "/user/" + token, String.class);
         if (StringUtils.isNotEmpty(jsonData)) {
             try {
-                return MAPPER.readValue(jsonData, User.class);
-            } catch (Exception e) {
+                return MAPPER.readValue(jsonData, User.class);// 反序列化。
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }

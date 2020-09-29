@@ -24,6 +24,9 @@ public class TestQuanzi {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    /**
+     * 发布动态 ~ v1 ~ boolean。
+     */
     @Test
     public void testSavePublish() {
         Publish publish = new Publish();
@@ -31,9 +34,9 @@ public class TestQuanzi {
         publish.setLocationName("上海市");
         publish.setSeeType(1);
         publish.setText("今天天气不错~");
-        publish.setMedias(Arrays.asList("https://itcast-tanhua.oss-cn-shanghai.aliyuncs.com/images/quanzi/1.jpg"));
-        String publishId = this.quanZiApi.savePublish(publish);
-        System.out.println(publishId);
+        publish.setMedias(Arrays.asList("http://geek-tanhua.oss-cn-shanghai.aliyuncs.com/images/quanzi/1.jpg"));
+        boolean savePublish = this.quanZiApi.savePublishBool(publish);
+        System.out.println(savePublish);
     }
 
     @Test
@@ -52,23 +55,23 @@ public class TestQuanzi {
         }
     }
 
-    @Test
-    public void testSavePublish2() {
-        for (int i = 0; i < 100; i++) {
-            Publish publish = new Publish();
-            publish.setUserId(RandomUtils.nextLong(1, 10));
-            publish.setPid(Long.valueOf(1000 + i));
-            publish.setLocationName("上海市");
-            publish.setSeeType(1);
-            publish.setText("今天天气不错~ " + i);
-            publish.setMedias(Arrays.asList("http://itcast-tanhua.oss-cn-shanghai.aliyuncs.com/images/2019/10/01/15699262101875720.png",
-                    "http://itcast-tanhua.oss-cn-shanghai.aliyuncs.com/images/2019/10/01/15699262107836768.png",
-                    "http://itcast-tanhua.oss-cn-shanghai.aliyuncs.com/images/2019/10/01/15699262108584571.png",
-                    "http://itcast-tanhua.oss-cn-shanghai.aliyuncs.com/images/2019/10/01/15699262109221190.png"));
-            String publishId = this.quanZiApi.savePublish(publish);
-            System.out.println(publishId);
-        }
-    }
+//    @Test
+//    public void testSavePublish2() {
+//        for (int i = 0; i < 100; i++) {
+//            Publish publish = new Publish();
+//            publish.setUserId(RandomUtils.nextLong(1, 10));
+//            publish.setPid(Long.valueOf(1000 + i));
+//            publish.setLocationName("上海市");
+//            publish.setSeeType(1);
+//            publish.setText("今天天气不错~ " + i);
+//            publish.setMedias(Arrays.asList("http://itcast-tanhua.oss-cn-shanghai.aliyuncs.com/images/2019/10/01/15699262101875720.png",
+//                    "http://itcast-tanhua.oss-cn-shanghai.aliyuncs.com/images/2019/10/01/15699262107836768.png",
+//                    "http://itcast-tanhua.oss-cn-shanghai.aliyuncs.com/images/2019/10/01/15699262108584571.png",
+//                    "http://itcast-tanhua.oss-cn-shanghai.aliyuncs.com/images/2019/10/01/15699262109221190.png"));
+//            String publishId = this.quanZiApi.savePublish(publish);
+//            System.out.println(publishId);
+//        }
+//    }
 
     @Test
     public void testSaveRecommend() {

@@ -42,8 +42,11 @@ public class MovementsService {
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
 
+    @Autowired
+    private UserService userService;
+
     /**
-     * 发布动态。
+     * 发布动态。统一 Token。ThreadLocal 改进。
      *
      * @param textContent
      * @param location
@@ -77,6 +80,50 @@ public class MovementsService {
         publish.setMedias(imageUrls);
 
         return this.quanZiApi.savePublish(publish);
+    }
+
+
+    /**
+     * 发布动态。token。
+     *
+     * @param textContent
+     * @param location
+     * @param longitude
+     * @param latitude
+     * @param multipartFile
+     * @param token
+     * @return
+     */
+    public Boolean saveMovementsToken(String textContent,
+                                      String location,
+                                      String longitude,
+                                      String latitude,
+                                      MultipartFile[] multipartFile,
+                                      String token) {
+//        User user = UserThreadLocal.get();
+        User user = this.userService.queryUserByToken(token);
+
+        if (null == user) {
+            return false;
+        }
+
+        Publish publish = new Publish();
+        publish.setUserId(user.getId());
+        publish.setText(textContent);
+        publish.setLocationName(location);
+        publish.setLatitude(latitude);
+        publish.setLongitude(longitude);
+
+        // 图片上传。
+        List<String> imageUrls = new ArrayList<>();
+        for (MultipartFile file : multipartFile) {
+            PicUploadResult uploadResult = this.picUploadService.upload(file);
+            imageUrls.add(uploadResult.getName());
+        }
+
+        publish.setMedias(imageUrls);
+
+        return this.quanZiApi.savePublishBool(publish);
     }
 
     private PageResult queryPublishList(User user, Integer page, Integer pageSize) {

@@ -43,16 +43,17 @@ public class TodayBestService {
     private UserInfoService userInfoService;
     @Autowired
     private RecommendUserService recommendUserService;
+    @Autowired
+    private QuestionService questionService;
+    @Autowired
+    private RestTemplate restTemplate;
+
     @Value("${tanhua.sso.default.user}")
     private Long defaultUserId;
     @Value("${tanhua.sso.url}")
     private String ssoUrl;
     @Value("${tanhua.sso.default.recommend.users}")
     private String defaultRecommendUsers;
-    @Autowired
-    private QuestionService questionService;
-    @Autowired
-    private RestTemplate restTemplate;
 
     @Reference(version = "1.0.0")
     private IUserLikeApi userLikeApi;
@@ -63,8 +64,48 @@ public class TodayBestService {
     @Autowired
     private IMService imService;
 
+    /**
+     * v1。
+     *
+     * @param token
+     * @return
+     */
+    public TodayBest queryTodayBestToken(String token) {
+        // 根据 token 查询当前登录的用户信息。
+        User user = this.userService.queryUserByToken(token);
+//        User user = UserThreadLocal.get();
+
+        TodayBest todayBest = this.recommendUserService.queryTodayBest(user.getId());
+        if (todayBest == null) {
+            // 未找到最高得分的推荐用户，给出一个默认推荐用户。
+            todayBest = new TodayBest();
+            todayBest.setId(defaultUserId);
+            todayBest.setFateValue(95L);
+        }
+
+        // 补全用户信息。
+        UserInfo userInfo = this.userInfoService.queryUserInfoById(todayBest.getId());
+        if (null != userInfo) {
+            todayBest.setAge(userInfo.getAge());
+            todayBest.setAvatar(userInfo.getLogo());
+            todayBest.setGender(null == userInfo.getSex() ? null : userInfo.getSex().name().toLowerCase());
+            todayBest.setNickname(userInfo.getNickName());
+            todayBest.setTags(StringUtils.split(userInfo.getTags(), ','));
+        }
+
+        return todayBest;
+    }
+
+
+    /**
+     * ThreadLocal。
+     *
+     * @param token
+     * @return
+     */
     public TodayBest queryTodayBest() {
-        // 根据token查询当前登录的用户信息。
+        // 根据 token 查询当前登录的用户信息。
+//        User user = this.userService.queryUserByToken(token);
         User user = UserThreadLocal.get();
 
         TodayBest todayBest = this.recommendUserService.queryTodayBest(user.getId());
@@ -80,7 +121,7 @@ public class TodayBestService {
         if (null != userInfo) {
             todayBest.setAge(userInfo.getAge());
             todayBest.setAvatar(userInfo.getLogo());
-            todayBest.setGender(userInfo.getSex().name().toLowerCase());
+            todayBest.setGender(null == userInfo.getSex() ? null : userInfo.getSex().name().toLowerCase());
             todayBest.setNickname(userInfo.getNickName());
             todayBest.setTags(StringUtils.split(userInfo.getTags(), ','));
         }
@@ -88,8 +129,97 @@ public class TodayBestService {
         return todayBest;
     }
 
-    public PageResult queryRecommendUserList(RecommendUserQueryParam queryParam) {
+    public TodayBest queryTodayBest(Long userId) {
+        User user = UserThreadLocal.get();
+
+        TodayBest todayBest = new TodayBest();
+        // 补全信息。
+        UserInfo userInfo = this.userInfoService.queryUserInfoById(userId);
+        todayBest.setId(userId);
+        todayBest.setAge(userInfo.getAge());
+        todayBest.setAvatar(userInfo.getLogo());
+        todayBest.setGender(userInfo.getSex().name().toLowerCase());
+        todayBest.setNickname(userInfo.getNickName());
+        todayBest.setTags(StringUtils.split(userInfo.getTags(), ','));
+
+        double score = this.recommendUserService.queryScore(userId, user.getId());
+        if (score == 0) {
+            score = 98;// 默认分值。
+        }
+
+        todayBest.setFateValue(Double.valueOf(score).longValue());
+        return todayBest;
+    }
+
+    /**
+     * v1。
+     *
+     * @param queryParam
+     * @param token
+     * @return
+     */
+    public PageResult queryRecommendUserList(RecommendUserQueryParam queryParam, String token) {
         // 根据 token 查询当前登录的用户信息。
+        User user = this.userService.queryUserByToken(token);
+
+        PageInfo<RecommendUser> pageInfo = this.recommendUserService.queryRecommendUserList(user.getId(), queryParam.getPage(), queryParam.getPagesize());
+
+        // 推荐用户列表。
+        List<RecommendUser> records = pageInfo.getRecords();
+
+        List<Long> userIds = new ArrayList<>();
+        for (RecommendUser record : records) {
+            userIds.add(record.getUserId());
+        }
+
+        // 需要查询用户的信息，并且按照查询条件查询。
+        QueryWrapper<UserInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.in("user_id", userIds);// 用户 id。
+
+        if (queryParam.getAge() != null) {
+            queryWrapper.lt("age", queryParam.getAge());// 年龄小于。
+        }
+
+        if (StringUtils.isNotEmpty(queryParam.getCity())) {
+            queryWrapper.eq("city", queryParam.getCity());// 城市。
+        }
+
+        List<UserInfo> userInfoList = this.userInfoService.queryUserInfoList(queryWrapper);
+        List<TodayBest> todayBestList = new ArrayList<>();
+        for (UserInfo userInfo : userInfoList) {
+            TodayBest todayBest = new TodayBest();
+            todayBest.setId(userInfo.getUserId());
+            todayBest.setAge(userInfo.getAge());
+            todayBest.setAvatar(userInfo.getLogo());
+            todayBest.setGender(userInfo.getSex().name().toLowerCase());
+            todayBest.setNickname(userInfo.getNickName());
+            todayBest.setTags(StringUtils.split(userInfo.getTags(), ","));
+
+            // 缘分值。
+            for (RecommendUser record : records) {
+                if (record.getUserId().longValue() == todayBest.getId().longValue()) {
+                    double score = Math.floor(record.getScore());
+                    todayBest.setFateValue(Double.valueOf(score).longValue());
+                }
+            }
+
+            todayBestList.add(todayBest);
+        }
+
+        // 缘分值倒序。
+        Collections.sort(todayBestList, (o1, o2) -> (int) (o1.getFateValue() - o2.getFateValue()));
+
+        // 0，前端不需要的数据。
+        return new PageResult(0, queryParam.getPagesize(), 0, queryParam.getPage(), todayBestList);
+    }
+
+    /**
+     * ThreadLocal 版。
+     *
+     * @param queryParam
+     * @return
+     */
+    public PageResult queryRecommendUserList(RecommendUserQueryParam queryParam) {
         User user = UserThreadLocal.get();
 
         PageInfo<RecommendUser> pageInfo = this.recommendUserService.queryRecommendUserList(user.getId(), queryParam.getPage(), queryParam.getPagesize());
@@ -112,7 +242,6 @@ public class TodayBestService {
         for (RecommendUser record : records) {
             userIds.add(record.getUserId());
         }
-
 
         QueryWrapper<UserInfo> queryWrapper = new QueryWrapper<>();
         queryWrapper.in("user_id", userIds);// 用户 id。
@@ -152,29 +281,6 @@ public class TodayBestService {
         Collections.sort(todayBests, (o1, o2) -> Long.valueOf(o2.getFateValue() - o1.getFateValue()).intValue());
 
         return new PageResult(0, queryParam.getPagesize(), 0, queryParam.getPage(), todayBests);
-    }
-
-    public TodayBest queryTodayBest(Long userId) {
-
-        User user = UserThreadLocal.get();
-
-        TodayBest todayBest = new TodayBest();
-        // 补全信息。
-        UserInfo userInfo = this.userInfoService.queryUserInfoById(userId);
-        todayBest.setId(userId);
-        todayBest.setAge(userInfo.getAge());
-        todayBest.setAvatar(userInfo.getLogo());
-        todayBest.setGender(userInfo.getSex().name().toLowerCase());
-        todayBest.setNickname(userInfo.getNickName());
-        todayBest.setTags(StringUtils.split(userInfo.getTags(), ','));
-
-        double score = this.recommendUserService.queryScore(userId, user.getId());
-        if (score == 0) {
-            score = 98;// 默认分值。
-        }
-
-        todayBest.setFateValue(Double.valueOf(score).longValue());
-        return todayBest;
     }
 
     public String queryQuestion(Long userId) {
