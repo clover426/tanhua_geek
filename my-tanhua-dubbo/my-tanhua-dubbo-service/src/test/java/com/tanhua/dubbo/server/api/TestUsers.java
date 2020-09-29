@@ -22,6 +22,7 @@ public class TestUsers {
 
     @Test
     public void saveUsers() {
+        // 用户 ID 为 1 的用户的 5 个好友。
         this.mongoTemplate.save(new Users(ObjectId.get(), 1L, 2L, System.currentTimeMillis()));
         this.mongoTemplate.save(new Users(ObjectId.get(), 1L, 3L, System.currentTimeMillis()));
         this.mongoTemplate.save(new Users(ObjectId.get(), 1L, 4L, System.currentTimeMillis()));

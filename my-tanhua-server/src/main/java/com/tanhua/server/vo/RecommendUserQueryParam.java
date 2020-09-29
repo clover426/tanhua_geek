@@ -16,4 +16,5 @@ public class RecommendUserQueryParam {
     private Integer age;// 年龄。
     private String city;// 居住地。
     private String education;// 学历。
+
 }

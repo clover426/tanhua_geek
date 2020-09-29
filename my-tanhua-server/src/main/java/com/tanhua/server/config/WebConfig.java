@@ -18,7 +18,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        // 注意拦截器的顺序。
+        // 注意拦截器的顺序。先权限认证。
         registry.addInterceptor(this.tokenInterceptor).addPathPatterns("/**");
         registry.addInterceptor(this.redisCacheInterceptor).addPathPatterns("/**");
     }

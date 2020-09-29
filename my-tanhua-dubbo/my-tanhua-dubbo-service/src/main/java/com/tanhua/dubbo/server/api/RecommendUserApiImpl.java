@@ -20,13 +20,13 @@ public class RecommendUserApiImpl implements IRecommendUserApi {
     private MongoTemplate mongoTemplate;
 
     /**
-     * 今日佳人
+     * 今日佳人。
      *
      * @param userId
      * @return
      */
     @Override
-    public RecommendUser queryWithMaxScore(Long userId) {
+    public RecommendUser queryMaxScore(Long userId) {
         // 条件。
         Criteria criteria = Criteria.where("toUserId").is(userId);
         // 按照得分倒序排序，获取第一条数据。
@@ -36,7 +36,7 @@ public class RecommendUserApiImpl implements IRecommendUserApi {
     }
 
     /**
-     * 推荐用户的列表查询
+     * 推荐用户的列表查询。
      *
      * @param userId
      * @param pageNum

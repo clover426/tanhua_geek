@@ -17,9 +17,9 @@ public class TestFaceEngineService {
 
     @Test
     public void testCheckIsPortrait() {
-        File file = new File("F:\\研发\\探花交友\\课程\\day01\\资料\\测试图片\\1.jpg");
+        File file = new File("E:\\geek\\IdeaProjects\\my-tanhua\\my-tanahua-sso\\src\\main\\resources\\renlian.jpg");
         boolean checkIsPortrait = this.faceEngineService.checkIsPortrait(file);
-        System.out.println(checkIsPortrait);//  true|false
+        System.out.println(checkIsPortrait);// true|false
     }
 
 }

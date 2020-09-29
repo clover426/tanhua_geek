@@ -16,11 +16,11 @@ import java.io.IOException;
 public class RequestReplaceFilter extends OncePerRequestFilter {
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        if (!(request instanceof MyServletRequestWrapper)) {
-            request = new MyServletRequestWrapper(request);
+    protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
+        if (!(httpServletRequest instanceof MyServletRequestWrapper)) {
+            httpServletRequest = new MyServletRequestWrapper(httpServletRequest);
         }
-        filterChain.doFilter(request, response);
+        filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 
 }

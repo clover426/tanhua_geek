@@ -11,7 +11,7 @@ public interface IRecommendUserApi {
      * @param userId
      * @return
      */
-    RecommendUser queryWithMaxScore(Long userId);
+    RecommendUser queryMaxScore(Long userId);
 
     /**
      * 按照得分倒序。

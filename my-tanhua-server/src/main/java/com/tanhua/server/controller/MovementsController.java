@@ -24,8 +24,42 @@ public class MovementsController {
     @Autowired
     private QuanziMQService quanziMQService;
 
+
     /**
-     * 发布动态。
+     * 发布动态。Authorization。
+     *
+     * @param textContent
+     * @param location
+     * @param longitude
+     * @param latitude
+     * @param multipartFile
+     * @param token
+     * @return
+     */
+    @PostMapping
+    public ResponseEntity<Void> saveMovementsAuth(@RequestParam("textContent") String textContent,
+                                                  @RequestParam("location") String location,
+                                                  @RequestParam("longitude") String longitude,
+                                                  @RequestParam("latitude") String latitude,
+                                                  @RequestParam("imageContent") MultipartFile[] multipartFile,
+                                                  @RequestHeader("Authorization") String token) {
+        try {
+            Boolean bool = this.movementsService.saveMovementsToken(textContent, location, longitude, latitude, multipartFile, token);
+
+            if (bool) {
+//                 发送消息。
+//                this.quanziMQService.sendSavePublishMsg(publishId);
+
+                return ResponseEntity.ok(null);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+
+    /**
+     * 发布动态。ThreadLocal 改进 。
      *
      * @param textContent
      * @param location
@@ -42,8 +76,8 @@ public class MovementsController {
                                               @RequestParam("imageContent") MultipartFile[] multipartFile) {
         try {
             String publishId = this.movementsService.saveMovements(textContent, location, longitude, latitude, multipartFile);
-            if (StringUtils.isNotEmpty(publishId)) {
 
+            if (StringUtils.isNotEmpty(publishId)) {
                 // 发送消息。
                 this.quanziMQService.sendSavePublishMsg(publishId);
 
@@ -56,15 +90,16 @@ public class MovementsController {
     }
 
     /**
-     * 查询好友的动态信息。
+     * 查询好友动态信息。
      *
      * @param page
      * @param pageSize
      * @return
      */
     @GetMapping
-    public ResponseEntity<PageResult> queryPublishList(@RequestParam(value = "page", defaultValue = "1") Integer page,
-                                                       @RequestParam(value = "pagesize", defaultValue = "10") Integer pageSize) {
+    public ResponseEntity<PageResult> queryPublishList(
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "pagesize", defaultValue = "10") Integer pageSize) {
         try {
             PageResult pageResult = this.movementsService.queryUserPublishList(page, pageSize);
             return ResponseEntity.ok(pageResult);
@@ -82,8 +117,9 @@ public class MovementsController {
      * @return
      */
     @GetMapping("recommend")
-    public ResponseEntity<PageResult> queryRecommendPublishList(@RequestParam(value = "page", defaultValue = "1") Integer page,
-                                                                @RequestParam(value = "pagesize", defaultValue = "10") Integer pageSize) {
+    public ResponseEntity<PageResult> queryRecommendPublishList(
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "pagesize", defaultValue = "10") Integer pageSize) {
         try {
             PageResult pageResult = this.movementsService.queryRecommendPublishList(page, pageSize);
             return ResponseEntity.ok(pageResult);

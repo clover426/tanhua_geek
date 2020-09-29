@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
-@RequestMapping("user")
+@RequestMapping("/user")
 @RestController
 public class SmsController {
 
@@ -25,12 +25,12 @@ public class SmsController {
      * @param param
      * @return
      */
-    @PostMapping("login")
+    @PostMapping("/login")
     public ResponseEntity<Object> sendCheckCode(@RequestBody Map<String, Object> param) {
         ErrorResult.ErrorResultBuilder builder = ErrorResult.builder().errCode("000000").errMessage("短信发送失败。");
         String phone = String.valueOf(param.get("phone"));
         Map<String, Object> sendCheckCode = this.smsService.sendCheckCode(phone);
-        int code = ((Integer) (sendCheckCode.get("code"))).intValue();
+        int code = (Integer) (sendCheckCode.get("code"));
         if (code == 3) {
             // 发送成功。
             return ResponseEntity.ok(null);

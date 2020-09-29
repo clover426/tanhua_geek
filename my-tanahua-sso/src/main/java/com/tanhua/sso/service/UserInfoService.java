@@ -2,7 +2,7 @@ package com.tanhua.sso.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.tanhua.sso.enums.SexEnum;
-import com.tanhua.sso.mapper.UserInfoMapper;
+import com.tanhua.sso.mapper.IUserInfoMapper;
 import com.tanhua.sso.pojo.User;
 import com.tanhua.sso.pojo.UserInfo;
 import com.tanhua.sso.vo.PicUploadResult;
@@ -21,7 +21,7 @@ public class UserInfoService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserInfoService.class);
 
     @Autowired
-    private UserInfoMapper userInfoMapper;
+    private IUserInfoMapper userInfoMapper;
 
     @Autowired
     private UserService userService;

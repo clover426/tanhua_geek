@@ -22,4 +22,5 @@ public class RecommendUser implements java.io.Serializable {
     @Indexed
     private Double score;// 推荐得分。
     private String date;// 日期。
+
 }
