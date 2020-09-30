@@ -21,6 +21,13 @@ public class UserLikeApiImpl implements IUserLikeApi {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    /**
+     * 保存喜欢。
+     *
+     * @param userId
+     * @param likeUserId
+     * @return
+     */
     @Override
     public String saveUserLike(Long userId, Long likeUserId) {
         // 判断喜欢关系是否存在。
@@ -57,6 +64,13 @@ public class UserLikeApiImpl implements IUserLikeApi {
         return this.mongoTemplate.count(Query.query(criteria), UserLike.class) == 2;
     }
 
+    /**
+     * 取消用户喜欢。
+     *
+     * @param userId
+     * @param likeUserId
+     * @return
+     */
     @Override
     public Boolean deleteUserLike(Long userId, Long likeUserId) {
         Query query = Query.query(Criteria.where("userId").is(userId)
@@ -65,6 +79,12 @@ public class UserLikeApiImpl implements IUserLikeApi {
         return deleteResult.getDeletedCount() == 1;
     }
 
+    /**
+     * 查询相互喜欢的数量。
+     *
+     * @param userId
+     * @return
+     */
     @Override
     public Long queryEachLikeCount(Long userId) {
         // 思路：首先查询我的喜欢列表，然后，在我的喜欢的人范围内，查询喜欢我的人。
@@ -85,6 +105,12 @@ public class UserLikeApiImpl implements IUserLikeApi {
         return this.mongoTemplate.count(query2, UserLike.class);
     }
 
+    /**
+     * 查询喜欢数。
+     *
+     * @param userId
+     * @return
+     */
     @Override
     public Long queryLikeCount(Long userId) {
         return this.mongoTemplate.count(Query.query(Criteria.where("userId").is(userId)), UserLike.class);
@@ -95,6 +121,14 @@ public class UserLikeApiImpl implements IUserLikeApi {
         return this.mongoTemplate.count(Query.query(Criteria.where("likeUserId").is(userId)), UserLike.class);
     }
 
+    /**
+     * 查询相互喜欢列表。
+     *
+     * @param userId
+     * @param page
+     * @param pageSize
+     * @return
+     */
     @Override
     public PageInfo<UserLike> queryEachLikeList(Long userId, Integer page, Integer pageSize) {
         // 查询我的喜欢列表。
@@ -110,11 +144,27 @@ public class UserLikeApiImpl implements IUserLikeApi {
         return this.queryList(query2, page, pageSize);
     }
 
+    /**
+     * 查询我喜欢的列表。
+     *
+     * @param userId
+     * @param page
+     * @param pageSize
+     * @return
+     */
     @Override
     public PageInfo<UserLike> queryLikeList(Long userId, Integer page, Integer pageSize) {
         return this.queryList(Query.query(Criteria.where("userId").is(userId)), page, pageSize);
     }
 
+    /**
+     * 查询粉丝列表。
+     *
+     * @param userId
+     * @param page
+     * @param pageSize
+     * @return
+     */
     @Override
     public PageInfo<UserLike> queryFanList(Long userId, Integer page, Integer pageSize) {
         return this.queryList(Query.query(Criteria.where("likeUserId").is(userId)), page, pageSize);

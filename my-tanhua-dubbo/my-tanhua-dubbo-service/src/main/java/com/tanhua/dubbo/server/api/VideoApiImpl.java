@@ -26,6 +26,12 @@ public class VideoApiImpl implements IVideoApi {
     @Autowired
     private IdService idService;
 
+    /**
+     * 保存小视频。
+     *
+     * @param video
+     * @return
+     */
     @Override
     public String saveVideo(Video video) {
 
@@ -42,6 +48,13 @@ public class VideoApiImpl implements IVideoApi {
         return video.getId().toHexString();
     }
 
+    /**
+     * 分页查询小视频列表，按照时间倒序排序。
+     *
+     * @param page
+     * @param pageSize
+     * @return
+     */
     @Override
     public PageInfo<Video> queryVideoList(Integer page, Integer pageSize) {
         Pageable pageable = PageRequest.of(page - 1, pageSize, Sort.by(Sort.Order.desc("created")));
@@ -55,6 +68,13 @@ public class VideoApiImpl implements IVideoApi {
         return pageInfo;
     }
 
+    /**
+     * 关注用户。
+     *
+     * @param userId
+     * @param followUserId
+     * @return
+     */
     @Override
     public Boolean followUser(Long userId, Long followUserId) {
         try {
@@ -71,6 +91,13 @@ public class VideoApiImpl implements IVideoApi {
         return false;
     }
 
+    /**
+     * 取消关注用户。
+     *
+     * @param userId
+     * @param followUserId
+     * @return
+     */
     @Override
     public Boolean disFollowUser(Long userId, Long followUserId) {
         Query query = Query.query(Criteria.where("userId").is(userId).and("followUserId").is(followUserId));
@@ -78,11 +105,23 @@ public class VideoApiImpl implements IVideoApi {
         return deleteResult.getDeletedCount() > 0;
     }
 
+    /**
+     * 根据 id 查询小视频。
+     *
+     * @param id
+     * @return
+     */
     @Override
     public Video queryVideoById(String id) {
         return this.mongoTemplate.findById(new ObjectId(id), Video.class);
     }
 
+    /**
+     * 根据 vids 批量查询视频列表。
+     *
+     * @param vids
+     * @return
+     */
     @Override
     public List<Video> queryVideoListByPids(List<Long> vids) {
         Query query = Query.query(Criteria.where("vid").in(vids));

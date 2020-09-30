@@ -19,6 +19,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /**
+     * 登录验证。
+     *
+     * @param param
+     * @return
+     */
     @PostMapping("/loginVerification")
     public ResponseEntity<Object> login(@RequestBody Map<String, String> param) {
         try {

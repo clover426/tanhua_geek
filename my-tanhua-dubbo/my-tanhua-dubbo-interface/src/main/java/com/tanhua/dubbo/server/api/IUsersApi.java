@@ -16,7 +16,7 @@ public interface IUsersApi {
     String saveUsers(Users users);
 
     /**
-     * 根据用户 id 查询 Users 列表。
+     * 根据用户 id 查询 users 列表。
      *
      * @param userId
      * @return
@@ -24,7 +24,7 @@ public interface IUsersApi {
     List<Users> queryAllUsersList(Long userId);
 
     /**
-     * 根据用户 id 查询 Users 列表（分页查询）。
+     * 根据用户 id 查询 users 列表（分页查询）。
      *
      * @param userId
      * @return

@@ -20,7 +20,7 @@ public class SmsController {
     private SmsService smsService;
 
     /**
-     * 发送验证码接口。
+     * 发送验证码。
      *
      * @param param
      * @return

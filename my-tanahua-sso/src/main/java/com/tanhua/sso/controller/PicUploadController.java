@@ -17,6 +17,12 @@ public class PicUploadController {
     @Autowired
     private PicUploadService picUploadService;
 
+    /**
+     * 上传图片。
+     *
+     * @param multipartFile
+     * @return
+     */
     @PostMapping
     @ResponseBody
     public PicUploadResult upload(@RequestParam("file") MultipartFile multipartFile) {

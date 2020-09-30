@@ -53,6 +53,13 @@ public class UserInfoService {
         return true;
     }
 
+    /**
+     * 保存头像。
+     *
+     * @param file
+     * @param token
+     * @return
+     */
     public Boolean saveLogo(MultipartFile file, String token) {
         User user = this.userService.queryUserByToken(token);
         if (user == null) {

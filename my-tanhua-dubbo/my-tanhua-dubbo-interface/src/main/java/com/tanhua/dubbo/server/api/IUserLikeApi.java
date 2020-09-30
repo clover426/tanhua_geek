@@ -15,7 +15,7 @@ public interface IUserLikeApi {
     String saveUserLike(Long userId, Long likeUserId);
 
     /**
-     * 相互喜欢。
+     * 是否相互喜欢。
      *
      * @param userId
      * @param likeUserId
@@ -24,7 +24,7 @@ public interface IUserLikeApi {
     Boolean isMutualLike(Long userId, Long likeUserId);
 
     /**
-     * 删除用户喜欢。
+     * 取消用户喜欢。
      *
      * @param userId
      * @param likeUserId
@@ -33,22 +33,25 @@ public interface IUserLikeApi {
     Boolean deleteUserLike(Long userId, Long likeUserId);
 
     /**
-     * 相互喜欢的数量。
+     * 查询相互喜欢的数量。
      *
+     * @param userId
      * @return
      */
     Long queryEachLikeCount(Long userId);
 
     /**
-     * 喜欢数。
+     * 查询喜欢数。
      *
+     * @param userId
      * @return
      */
     Long queryLikeCount(Long userId);
 
     /**
-     * 粉丝数
+     * 查询粉丝数。
      *
+     * @param userId
      * @return
      */
     Long queryFanCount(Long userId);
@@ -64,7 +67,7 @@ public interface IUserLikeApi {
     PageInfo<UserLike> queryEachLikeList(Long userId, Integer page, Integer pageSize);
 
     /**
-     * 查询我喜欢的列表
+     * 查询我喜欢的列表。
      *
      * @param userId
      * @param page

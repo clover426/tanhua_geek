@@ -21,6 +21,12 @@ public class VisitorsApiImpl implements IVisitorsApi {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    /**
+     * 保存来访记录。
+     *
+     * @param visitors
+     * @return
+     */
     @Override
     public String saveVisitor(Visitors visitors) {
         visitors.setId(ObjectId.get());
@@ -30,6 +36,13 @@ public class VisitorsApiImpl implements IVisitorsApi {
         return visitors.getId().toHexString();
     }
 
+    /**
+     * 查询最近的访客信息。按照时间倒序排序。
+     *
+     * @param userId
+     * @param num
+     * @return
+     */
     @Override
     public List<Visitors> topVisitor(Long userId, Integer num) {
         Pageable pageable = PageRequest.of(0, num, Sort.by(Sort.Order.desc("date")));
@@ -37,6 +50,13 @@ public class VisitorsApiImpl implements IVisitorsApi {
         return this.queryVisitorsList(query);
     }
 
+    /**
+     * 查询最近的访客信息。按照时间倒序排序。
+     *
+     * @param userId
+     * @param date
+     * @return
+     */
     @Override
     public List<Visitors> topVisitor(Long userId, Long date) {
         Query query = Query.query(Criteria
@@ -46,6 +66,14 @@ public class VisitorsApiImpl implements IVisitorsApi {
         return this.queryVisitorsList(query);
     }
 
+    /**
+     * 查询最近的访客信息。按照时间倒序排序。
+     *
+     * @param userId
+     * @param page
+     * @param pageSize
+     * @return
+     */
     @Override
     public PageInfo<Visitors> topVisitor(Long userId, Integer page, Integer pageSize) {
         Pageable pageable = PageRequest.of(page - 1, pageSize, Sort.by(Sort.Order.desc("date")));

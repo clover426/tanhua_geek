@@ -28,7 +28,6 @@ public class HuanXinTokenService {
     private RedisTemplate<String, String> redisTemplate;
 
     public String getToken() {
-
         // 先从 Redis 中命中。
         String cacheData = this.redisTemplate.opsForValue().get(tokenRedisKey);
         if (StringUtils.isNotEmpty(cacheData)) {

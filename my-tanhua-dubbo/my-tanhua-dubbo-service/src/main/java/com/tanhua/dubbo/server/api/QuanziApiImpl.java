@@ -78,6 +78,12 @@ public class QuanziApiImpl implements IQuanZiApi {
         return false;
     }
 
+    /**
+     * 发布动态。
+     *
+     * @param publish
+     * @return
+     */
     @Override
     public String savePublish(Publish publish) {
         // 校验 publish 对象。
@@ -174,6 +180,13 @@ public class QuanziApiImpl implements IQuanZiApi {
         return pageInfo;
     }
 
+    /**
+     * 点赞动态。
+     *
+     * @param userId
+     * @param publishId
+     * @return
+     */
     @Override
     public boolean saveLikeComment(Long userId, String publishId) {
         //判断是否已经点赞，如果已经点赞就返回。
@@ -189,6 +202,13 @@ public class QuanziApiImpl implements IQuanZiApi {
         return this.saveComment(userId, publishId, 1, null);
     }
 
+    /**
+     * 取消点赞、喜欢等评论。
+     *
+     * @param userId
+     * @param publishId
+     * @return
+     */
     @Override
     public boolean removeComment(Long userId, String publishId, Integer commentType) {
         Criteria criteria = Criteria.where("userId").is(userId)
@@ -200,6 +220,13 @@ public class QuanziApiImpl implements IQuanZiApi {
         return deleteResult.getDeletedCount() > 0;
     }
 
+    /**
+     * 喜欢评论。
+     *
+     * @param userId
+     * @param publishId
+     * @return
+     */
     @Override
     public boolean saveLoveComment(Long userId, String publishId) {
         // 判断是否已经喜欢，如果已经喜欢就返回。
@@ -215,6 +242,15 @@ public class QuanziApiImpl implements IQuanZiApi {
         return this.saveComment(userId, publishId, 3, null);
     }
 
+    /**
+     * 保存评论。
+     *
+     * @param userId
+     * @param publishId
+     * @param type
+     * @param content
+     * @return
+     */
     @Override
     public boolean saveComment(Long userId, String publishId, Integer type, String content) {
         try {
@@ -246,6 +282,13 @@ public class QuanziApiImpl implements IQuanZiApi {
         return false;
     }
 
+    /**
+     * 查询评论数。
+     *
+     * @param publishId
+     * @param type
+     * @return
+     */
     @Override
     public Long queryCommentCount(String publishId, Integer type) {
         Criteria criteria = Criteria.where("publishId").is(new ObjectId(publishId))
@@ -254,11 +297,25 @@ public class QuanziApiImpl implements IQuanZiApi {
         return this.mongoTemplate.count(query, Comment.class);
     }
 
+    /**
+     * 根据 id 查询动态。
+     *
+     * @param publishId
+     * @return
+     */
     @Override
     public Publish queryPublishById(String publishId) {
         return this.mongoTemplate.findById(new ObjectId(publishId), Publish.class);
     }
 
+    /**
+     * 查询评论列表。
+     *
+     * @param publishId
+     * @param page
+     * @param pageSize
+     * @return
+     */
     @Override
     public PageInfo<Comment> queryCommentList(String publishId, Integer page, Integer pageSize) {
         PageRequest pageRequest = PageRequest.of(page - 1, pageSize, Sort.by(Sort.Order.asc("created")));
@@ -273,12 +330,27 @@ public class QuanziApiImpl implements IQuanZiApi {
         return pageInfo;
     }
 
+    /**
+     * 根据 pid 批量查询动态。
+     *
+     * @param pids
+     * @return
+     */
     @Override
     public List<Publish> queryPublishByPids(List<Long> pids) {
         Query query = Query.query(Criteria.where("pid").in(pids));
         return this.mongoTemplate.find(query, Publish.class);
     }
 
+    /**
+     * 查询用户的评论数据。
+     *
+     * @param userId
+     * @param type
+     * @param page
+     * @param pageSize
+     * @return
+     */
     @Override
     public PageInfo<Comment> queryCommentListByUser(Long userId, Integer type, Integer page, Integer pageSize) {
         PageRequest pageRequest = PageRequest.of(page - 1, pageSize, Sort.by(Sort.Order.desc("created")));
@@ -296,6 +368,14 @@ public class QuanziApiImpl implements IQuanZiApi {
         return pageInfo;
     }
 
+    /**
+     * 查询相册列表。
+     *
+     * @param userId
+     * @param page
+     * @param pageSize
+     * @return
+     */
     @Override
     public PageInfo<Publish> queryAlbumList(Long userId, Integer page, Integer pageSize) {
         PageInfo<Publish> pageInfo = new PageInfo<>();
