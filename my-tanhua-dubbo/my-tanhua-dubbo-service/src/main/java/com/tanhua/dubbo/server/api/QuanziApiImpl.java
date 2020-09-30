@@ -207,6 +207,7 @@ public class QuanziApiImpl implements IQuanZiApi {
      *
      * @param userId
      * @param publishId
+     * @param commentType 评论类型，1 ~ 点赞，2 ~ 评论，3 ~ 喜欢。
      * @return
      */
     @Override
