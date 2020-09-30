@@ -189,7 +189,7 @@ public class QuanziApiImpl implements IQuanZiApi {
      */
     @Override
     public boolean saveLikeComment(Long userId, String publishId) {
-        //判断是否已经点赞，如果已经点赞就返回。
+        // 判断是否已经点赞，如果已经点赞就返回。
         Criteria criteria = Criteria.where("userId").is(userId)
                 .and("publishId").is(new ObjectId(publishId))
                 .and("commentType").is(1);
@@ -257,7 +257,7 @@ public class QuanziApiImpl implements IQuanZiApi {
         try {
             Comment comment = new Comment();
             comment.setContent(content);
-            comment.setIsParent(true);
+            comment.setIsParent(true);// 暂时不实现，都设置为父节点。
             comment.setCommentType(type);
             comment.setPublishId(new ObjectId(publishId));
             comment.setUserId(userId);
