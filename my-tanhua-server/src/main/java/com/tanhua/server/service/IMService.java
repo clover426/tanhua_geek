@@ -50,7 +50,7 @@ public class IMService {
     private AnnouncementService announcementService;
 
     public Boolean contactUser(Long userId) {
-        // 需要做 2 件事，1、保存数据到 MongoDB，2、好友关系注册到环信。
+        // 需要做 2 件事，1、保存数据到 MongoDB。2、好友关系注册到环信。
 
         Users users = new Users();
         users.setUserId(UserThreadLocal.get().getId());

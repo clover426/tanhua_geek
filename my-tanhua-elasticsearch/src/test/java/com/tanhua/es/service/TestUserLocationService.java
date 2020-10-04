@@ -39,14 +39,13 @@ public class TestUserLocationService {
         System.out.println(userLocationES);
     }
 
-
     @Test
     public void testQuery() {
         Page<UserLocationES> userLocationPage = this.userLocationService.queryUserFromLocation(121.512253, 31.24094, 1000d, 1, 100);
         userLocationPage.forEach(userLocationES -> {
             System.out.println(userLocationES);
             double distance = GeoDistance.ARC.calculate(31.24094, 121.512253, userLocationES.getLocation().getLat(), userLocationES.getLocation().getLon(), DistanceUnit.METERS);
-            System.out.println("距离我 : " + distance + "米");
+            System.out.println("距离我：" + distance + " 米。");
         });
     }
 

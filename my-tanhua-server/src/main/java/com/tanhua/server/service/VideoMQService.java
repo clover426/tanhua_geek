@@ -89,6 +89,7 @@ public class VideoMQService {
             LOGGER.error("发送消息失败 ~ videoId = " + videoId + ", type = " + type, e);
             return false;
         }
+
         return true;
     }
 

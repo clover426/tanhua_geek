@@ -65,6 +65,7 @@ public class HuanXinTokenService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return null;
     }
 

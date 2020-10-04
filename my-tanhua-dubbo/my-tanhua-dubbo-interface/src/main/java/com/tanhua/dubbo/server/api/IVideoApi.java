@@ -15,6 +15,8 @@ public interface IVideoApi {
      */
     String saveVideo(Video video);
 
+    Boolean saveVideoBool(Video video);
+
     /**
      * 分页查询小视频列表，按照时间倒序排序。
      *

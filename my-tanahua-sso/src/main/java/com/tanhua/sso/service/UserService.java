@@ -117,7 +117,7 @@ public class UserService {
             this.rocketMQTemplate.convertAndSend("tanhua-sso-login", msg);
         } catch (MessagingException e) {
             e.printStackTrace();
-            LOGGER.error("发送消息出错。", e);
+            LOGGER.error("发送消息出错 ~ ", e);
         }
 
         return isNew + " ~ " + token;
@@ -136,6 +136,7 @@ public class UserService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return null;
     }
 

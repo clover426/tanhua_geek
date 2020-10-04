@@ -20,7 +20,7 @@ import java.util.*;
 public class SparkQunaZi {
 
     public static void main(String[] args) throws Exception {
-        // 加载外部的配置文件 app.properties.
+        // 加载外部的配置文件 app.properties。
         InputStream inputStream = SparkQunaZi.class.getClassLoader().getResourceAsStream("app.properties");
         Properties properties = new Properties();
         properties.load(inputStream);

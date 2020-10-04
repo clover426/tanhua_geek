@@ -38,6 +38,7 @@ public class UsersController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
@@ -57,6 +58,7 @@ public class UsersController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
@@ -75,6 +77,7 @@ public class UsersController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
@@ -99,6 +102,7 @@ public class UsersController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
@@ -116,6 +120,7 @@ public class UsersController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
@@ -133,6 +138,7 @@ public class UsersController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
@@ -151,6 +157,7 @@ public class UsersController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
@@ -168,6 +175,7 @@ public class UsersController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
@@ -187,6 +195,7 @@ public class UsersController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
@@ -203,6 +212,7 @@ public class UsersController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
@@ -224,6 +234,7 @@ public class UsersController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 

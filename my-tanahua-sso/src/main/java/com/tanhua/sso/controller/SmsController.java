@@ -39,6 +39,7 @@ public class SmsController {
             String msg = sendCheckCode.get("msg").toString();
             builder.errCode("000001").errMessage(msg);
         }
+
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(builder.build());
     }
 

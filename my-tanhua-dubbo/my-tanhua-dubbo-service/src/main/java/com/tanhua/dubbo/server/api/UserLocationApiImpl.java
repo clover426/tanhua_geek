@@ -22,9 +22,17 @@ public class UserLocationApiImpl implements IUserLocationApi {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    /**
+     * 更新用户地理位置。
+     *
+     * @param userId
+     * @param longitude
+     * @param latitude
+     * @param address
+     * @return
+     */
     @Override
     public String updateUserLocation(Long userId, Double longitude, Double latitude, String address) {
-
         UserLocation userLocation = new UserLocation();
         userLocation.setAddress(address);
         userLocation.setUserId(userId);
@@ -55,6 +63,12 @@ public class UserLocationApiImpl implements IUserLocationApi {
         return ul.getId().toHexString();
     }
 
+    /**
+     * 查询用户地理位置。
+     *
+     * @param userId
+     * @return
+     */
     @Override
     public UserLocationVo queryByUserId(Long userId) {
         Query query = Query.query(Criteria.where("userId").is(userId));
@@ -62,6 +76,7 @@ public class UserLocationApiImpl implements IUserLocationApi {
         if (null != userLocation) {
             return UserLocationVo.format(userLocation);
         }
+
         return null;
     }
 

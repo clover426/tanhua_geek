@@ -12,7 +12,6 @@ public class User extends BasePojo {
 
     private Long id;
     private String mobile;// 手机号。
-
     @JsonIgnore
     private String password;// 密码，json 序列化时忽略。
 
@@ -50,4 +49,5 @@ CREATE TABLE `tb_user_info` (
 PRIMARY KEY (`id`),
 KEY `user_id` (`user_id`)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8 COMMENT='用户信息表。';
+
  */

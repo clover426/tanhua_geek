@@ -29,6 +29,7 @@ public class UserInfo extends BasePojo {
 
 
 /*
+
 CREATE TABLE `tb_user_info` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) NOT NULL COMMENT '用户 id。',
@@ -49,4 +50,5 @@ CREATE TABLE `tb_user_info` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户信息表。'
+
  */

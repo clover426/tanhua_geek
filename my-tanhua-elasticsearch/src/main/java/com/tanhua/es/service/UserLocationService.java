@@ -25,8 +25,8 @@ public class UserLocationService {
     private ElasticsearchTemplate elasticsearchTemplate;
 
     public boolean updateUserLocation(Long userId, Double longitude, Double latitude, String address) {
-        try {
 
+        try {
             // 判断索引库是否存在，如果不存在需要创建。
             if (!this.elasticsearchTemplate.indexExists(UserLocationES.class)) {
                 // 创建索引。
@@ -55,7 +55,7 @@ public class UserLocationService {
                 userLocationES.setLocation(new GeoPoint(latitude, longitude));
 
                 IndexQuery indexQuery = new IndexQueryBuilder().withObject(userLocationES).build();
-                this.elasticsearchTemplate.index(indexQuery);// 保存数据到Elasticsearch中
+                this.elasticsearchTemplate.index(indexQuery);// 保存数据到 Elasticsearch 中。
             } else {
                 // 更新操作。
                 Map<String, Object> map = new HashMap<>();
@@ -73,10 +73,12 @@ public class UserLocationService {
 
                 this.elasticsearchTemplate.update(updateQuery);
             }
+
             return true;
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return false;
     }
 

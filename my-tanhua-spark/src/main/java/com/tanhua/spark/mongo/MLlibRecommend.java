@@ -16,7 +16,7 @@ public class MLlibRecommend {
         Long numMovies = ratings.map(v1 -> (v1._2()).product()).distinct().count();
         System.out.println("用户：" + numUsers + "动态：" + numMovies + "评论：" + numRatings);
 
-        // 将样本评分表以key值切分成3个部分，分别用于训练 (60%，并加入用户评分), 校验 (20%), and 测试 (20%)。
+        // 将样本评分表以 key 值切分成 3 个部分，分别用于训练（60%，并加入用户评分），校验（20%）, and 测试（20%）。
         // 该数据在计算过程中要多次应用到，所以 cache 到内存。
 
         Integer numPartitions = 4;// 分区数。

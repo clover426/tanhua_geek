@@ -96,7 +96,6 @@ public class TodayBestService {
         return todayBest;
     }
 
-
     /**
      * ThreadLocal。
      *
@@ -288,6 +287,7 @@ public class TodayBestService {
         if (null != question) {
             return question.getTxt();
         }
+
         return "";
     }
 
@@ -463,6 +463,7 @@ public class TodayBestService {
             // 相互喜欢成为好友。
             this.imService.contactUser(likeUserId);
         }
+
         return true;
     }
 

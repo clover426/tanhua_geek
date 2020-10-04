@@ -20,6 +20,7 @@ public class BaiduService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return false;
     }
 

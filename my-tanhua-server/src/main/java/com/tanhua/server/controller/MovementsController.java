@@ -24,39 +24,38 @@ public class MovementsController {
     @Autowired
     private QuanziMQService quanziMQService;
 
-
-    /**
-     * 发布动态。Authorization。
-     *
-     * @param textContent
-     * @param location
-     * @param longitude
-     * @param latitude
-     * @param multipartFile
-     * @param token
-     * @return
-     */
-    @PostMapping
-    public ResponseEntity<Void> saveMovementsAuth(@RequestParam("textContent") String textContent,
-                                                  @RequestParam("location") String location,
-                                                  @RequestParam("longitude") String longitude,
-                                                  @RequestParam("latitude") String latitude,
-                                                  @RequestParam("imageContent") MultipartFile[] multipartFile,
-                                                  @RequestHeader("Authorization") String token) {
-        try {
-            Boolean bool = this.movementsService.saveMovementsToken(textContent, location, longitude, latitude, multipartFile, token);
-
-            if (bool) {
-//                 发送消息。
-//                this.quanziMQService.sendSavePublishMsg(publishId);
-
-                return ResponseEntity.ok(null);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-    }
+//    /**
+//     * 发布动态。Authorization。
+//     *
+//     * @param textContent
+//     * @param location
+//     * @param longitude
+//     * @param latitude
+//     * @param multipartFile
+//     * @param token
+//     * @return
+//     */
+//    @PostMapping
+//    public ResponseEntity<Void> saveMovementsAuth(@RequestParam("textContent") String textContent,
+//                                                  @RequestParam("location") String location,
+//                                                  @RequestParam("longitude") String longitude,
+//                                                  @RequestParam("latitude") String latitude,
+//                                                  @RequestParam("imageContent") MultipartFile[] multipartFile,
+//                                                  @RequestHeader("Authorization") String token) {
+//        try {
+//            Boolean bool = this.movementsService.saveMovementsToken(textContent, location, longitude, latitude, multipartFile, token);
+//
+//            if (bool) {
+////                 发送消息。
+////                this.quanziMQService.sendSavePublishMsg(publishId);
+//
+//                return ResponseEntity.ok(null);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//    }
 
     /**
      * 发布动态。ThreadLocal 改进 。
@@ -86,6 +85,7 @@ public class MovementsController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
@@ -105,6 +105,7 @@ public class MovementsController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
@@ -124,6 +125,7 @@ public class MovementsController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
@@ -146,6 +148,7 @@ public class MovementsController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
@@ -168,6 +171,7 @@ public class MovementsController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
@@ -190,6 +194,7 @@ public class MovementsController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
@@ -212,6 +217,7 @@ public class MovementsController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
@@ -234,6 +240,7 @@ public class MovementsController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
@@ -250,6 +257,7 @@ public class MovementsController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
@@ -268,6 +276,7 @@ public class MovementsController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 

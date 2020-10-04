@@ -9,6 +9,10 @@ public interface IUserLocationApi {
     /**
      * 更新用户地理位置。
      *
+     * @param userId
+     * @param longitude
+     * @param latitude
+     * @param address
      * @return
      */
     String updateUserLocation(Long userId, Double longitude, Double latitude, String address);

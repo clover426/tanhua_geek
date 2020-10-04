@@ -13,6 +13,7 @@ public class TestSmsService {
 
     @Autowired
     private SmsService smsService;
+
     @Autowired
     private RocketMQTemplate rocketMQTemplate;
 

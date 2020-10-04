@@ -40,6 +40,7 @@ public class UserLocationVo implements java.io.Serializable {
         for (UserLocation userLocation : userLocations) {
             list.add(format(userLocation));
         }
+
         return list;
     }
 

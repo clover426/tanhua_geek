@@ -33,9 +33,10 @@ public class CommentsController {
      * @return
      */
     @GetMapping
-    public ResponseEntity<PageResult> queryCommentsList(@RequestParam("movementId") String publishId,
-                                                        @RequestParam(value = "page", defaultValue = "1") Integer page,
-                                                        @RequestParam(value = "pagesize", defaultValue = "10") Integer pageSize) {
+    public ResponseEntity<PageResult> queryCommentsList(
+            @RequestParam("movementId") String publishId,
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "pagesize", defaultValue = "10") Integer pageSize) {
         try {
             PageResult pageResult = this.commentsService.queryCommentsList(publishId, page, pageSize);
             if (null != pageResult) {
@@ -44,6 +45,7 @@ public class CommentsController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
@@ -56,18 +58,19 @@ public class CommentsController {
     @PostMapping
     public ResponseEntity<Void> saveComments(@RequestBody Map<String, String> param) {
         try {
-            String publishId = param.get("movementId");
-            String content = param.get("comment");
-            Boolean bool = this.commentsService.saveComments(publishId, content);
+            String movementId = param.get("movementId");
+            String comment = param.get("comment");
+            Boolean bool = this.commentsService.saveComments(movementId, comment);
             if (bool) {
                 // 发送消息。
-                this.quanziMQService.sendCommentPublishMsg(publishId);
+                this.quanziMQService.sendCommentPublishMsg(movementId);
 
                 return ResponseEntity.ok(null);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
@@ -87,6 +90,7 @@ public class CommentsController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
@@ -106,6 +110,7 @@ public class CommentsController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 

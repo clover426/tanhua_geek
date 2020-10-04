@@ -19,6 +19,12 @@ public class UsersApiImpl implements IUsersApi {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    /**
+     * 保存好友。
+     *
+     * @param users
+     * @return
+     */
     @Override
     public String saveUsers(Users users) {
         // 校验。
@@ -44,12 +50,26 @@ public class UsersApiImpl implements IUsersApi {
         return users.getId().toHexString();
     }
 
+    /**
+     * 根据用户 id 查询 Users 列表。
+     *
+     * @param userId
+     * @return
+     */
     @Override
     public List<Users> queryAllUsersList(Long userId) {
         Query query = Query.query(Criteria.where("userId").is(userId));
         return this.mongoTemplate.find(query, Users.class);
     }
 
+    /**
+     * 根据用户 id 查询 Users 列表（分页查询）。
+     *
+     * @param userId
+     * @param page
+     * @param pageSize
+     * @return
+     */
     @Override
     public PageInfo<Users> queryUsersList(Long userId, Integer page, Integer pageSize) {
         PageRequest pageRequest = PageRequest.of(page - 1, pageSize, Sort.by(Sort.Order.desc("created")));

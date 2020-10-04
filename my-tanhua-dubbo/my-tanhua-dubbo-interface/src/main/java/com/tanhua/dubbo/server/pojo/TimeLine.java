@@ -16,7 +16,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class TimeLine implements java.io.Serializable {
 
     private ObjectId id;
-    private Long userId;// 好友id。
+    private Long userId;// 好友 id。
     private ObjectId publishId;// 发布 id。
     private Long date;// 发布的时间。
 

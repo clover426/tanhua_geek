@@ -15,7 +15,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 import java.time.Duration;
 
-
 /**
  * RedisCacheInterceptor 完成了缓存命中逻辑。
  * 在查到数据后，如何将结果写入缓存？
@@ -72,6 +71,7 @@ public class MyResponseBodyAdvice implements ResponseBodyAdvice {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return body;
     }
 

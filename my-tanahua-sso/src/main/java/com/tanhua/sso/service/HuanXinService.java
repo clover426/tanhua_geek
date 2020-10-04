@@ -17,6 +17,7 @@ import java.util.*;
 public class HuanXinService {
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
+
     @Autowired
     private HuanXinConfig huanXinConfig;
     @Autowired
@@ -111,7 +112,7 @@ public class HuanXinService {
             msgParam.put("type", type);
 
             requestParam.put("msg", msgParam);
-            // 表示消息发送者。无此字段 Server 会默认设置为 “from”: “admin”。有 from 字段但值为空串(“”)时请求失败。
+            // 表示消息发送者。无此字段 Server 会默认设置为 “from”: “admin”。有 from 字段但值为空串("")时请求失败。
 //        requestParam.put("from", null);
             HttpEntity<String> httpEntity = new HttpEntity<>(MAPPER.writeValueAsString(requestParam), headers);
             ResponseEntity<String> responseEntity = this.restTemplate.postForEntity(targetUrl, httpEntity, String.class);
@@ -119,6 +120,8 @@ public class HuanXinService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return false;
     }
+
 }

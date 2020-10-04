@@ -38,6 +38,7 @@ public class UserLocationController {
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
+
         return ResponseEntity.status(HttpStatus.INSUFFICIENT_STORAGE).build();
     }
 
@@ -54,10 +55,12 @@ public class UserLocationController {
             if (null == userLocationES) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             }
+
             return ResponseEntity.ok(userLocationES);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return ResponseEntity.status(HttpStatus.INSUFFICIENT_STORAGE).build();
     }
 
@@ -81,6 +84,7 @@ public class UserLocationController {
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
+
         return ResponseEntity.status(HttpStatus.INSUFFICIENT_STORAGE).build();
     }
 

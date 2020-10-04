@@ -64,6 +64,7 @@ public class RecommendUserApiImpl implements IRecommendUserApi {
         if (null == recommendUser) {
             return 0;
         }
+
         return recommendUser.getScore();
     }
 

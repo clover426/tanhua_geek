@@ -45,6 +45,7 @@ public class UsersService {
             this.redisTemplate.delete(redisKey);
             return true;
         }
+
         return false;
     }
 

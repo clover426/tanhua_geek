@@ -82,7 +82,6 @@ public class MovementsService {
         return this.quanZiApi.savePublish(publish);
     }
 
-
     /**
      * 发布动态。token。
      *

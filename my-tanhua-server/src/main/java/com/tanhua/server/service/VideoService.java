@@ -21,6 +21,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,22 +29,33 @@ import java.util.List;
 public class VideoService {
 
     @Autowired
-    protected FastFileStorageClient storageClient;
+    protected FastFileStorageClient fastFileStorageClient;
+
     @Reference(version = "1.0.0")
     private IVideoApi videoApi;
+
     @Autowired
     private PicUploadService picUploadService;
+
     @Autowired
-    private FdfsWebServer fdfsWebServer;
+    private FdfsWebServer fdfsWebServer;// fdfs.web-server-url=http://192.168.33.128:8888/
 
     @Autowired
     private UserInfoService userInfoService;
 
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
+
     @Reference(version = "1.0.0")
     private IQuanZiApi quanZiApi;
 
+    /**
+     * 保存视频到 FastDFS。
+     *
+     * @param picFile
+     * @param videoFile
+     * @return
+     */
     public String saveVideo(MultipartFile picFile, MultipartFile videoFile) {
 
         User user = UserThreadLocal.get();
@@ -58,18 +70,45 @@ public class VideoService {
             video.setPicUrl(picUploadResult.getName());
 
             // 上传视频。
-            StorePath storePath = storageClient.uploadFile(videoFile.getInputStream(),
+            StorePath storePath = fastFileStorageClient.uploadFile(videoFile.getInputStream(),
                     videoFile.getSize(),
                     StringUtils.substringAfter(videoFile.getOriginalFilename(), "."),
                     null);
             video.setVideoUrl(fdfsWebServer.getWebServerUrl() + storePath.getFullPath());
 
             return this.videoApi.saveVideo(video);
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
         return null;
+    }
+
+    public Boolean saveVideoBool(MultipartFile picFile, MultipartFile videoFile) {
+        User user = UserThreadLocal.get();
+
+        Video video = new Video();
+        video.setUserId(user.getId());
+        video.setSeeType(1);
+
+        try {
+            // 上传图片。
+            PicUploadResult picUploadResult = this.picUploadService.upload(picFile);
+            video.setPicUrl(picUploadResult.getName());
+
+            // 上传视频。
+            StorePath storePath = fastFileStorageClient.uploadFile(videoFile.getInputStream(),
+                    videoFile.getSize(),
+                    StringUtils.substringAfter(videoFile.getOriginalFilename(), "."),
+                    null);
+            video.setVideoUrl(fdfsWebServer.getWebServerUrl() + storePath.getFullPath());
+
+            return this.videoApi.saveVideoBool(video);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
     public PageResult queryVideoList(Integer page, Integer pageSize) {

@@ -32,10 +32,19 @@ public class CommentsService {
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
 
+    /**
+     * 查询评论列表。
+     *
+     * @param publishId
+     * @param page
+     * @param pageSize
+     * @return
+     */
     public PageResult queryCommentsList(String publishId, Integer page, Integer pageSize) {
         User user = UserThreadLocal.get();
 
         PageResult pageResult = new PageResult();
+        // 初始值。
         pageResult.setPage(page);
         pageResult.setPagesize(pageSize);
         pageResult.setCounts(0);
@@ -48,6 +57,7 @@ public class CommentsService {
             return pageResult;
         }
 
+        // 用户信息。
         List<Long> userIds = new ArrayList<>();
         for (Comment record : records) {
             if (!userIds.contains(record.getUserId())) {
@@ -59,6 +69,7 @@ public class CommentsService {
         queryWrapper.in("user_id", userIds);
         List<UserInfo> userInfoList = this.userInfoService.queryUserInfoList(queryWrapper);
 
+        // 最终返回的对象。
         List<Comments> commentsList = new ArrayList<>();
         for (Comment record : records) {
             Comments comments = new Comments();
@@ -75,9 +86,9 @@ public class CommentsService {
                 }
             }
 
+            // 点赞数。
             String likeUserCommentKey = "QUANZI_COMMENT_LIKE_USER_" + user.getId() + "_" + comments.getId();
             comments.setHasLiked(this.redisTemplate.hasKey(likeUserCommentKey) ? 1 : 0);// 是否点赞。
-
             String likeCommentKey = "QUANZI_COMMENT_LIKE_" + comments.getId();
             String value = this.redisTemplate.opsForValue().get(likeCommentKey);
             if (StringUtils.isNotEmpty(value)) {
@@ -85,18 +96,23 @@ public class CommentsService {
             } else {
                 comments.setLikeCount(0);// 点赞数。
             }
-
             commentsList.add(comments);
         }
-
         pageResult.setItems(commentsList);
 
         return pageResult;
     }
 
-    public Boolean saveComments(String publishId, String content) {
+    /**
+     * 保存评论。
+     *
+     * @param publishId
+     * @param comment
+     * @return
+     */
+    public Boolean saveComments(String publishId, String comment) {
         User user = UserThreadLocal.get();
-        return this.quanZiApi.saveComment(user.getId(), publishId, 2, content);
+        return this.quanZiApi.saveComment(user.getId(), publishId, 2, comment);
     }
 
 }

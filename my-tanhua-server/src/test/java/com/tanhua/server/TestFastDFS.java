@@ -17,20 +17,21 @@ import java.io.IOException;
 public class TestFastDFS {
 
     @Autowired
-    protected FastFileStorageClient storageClient;
+    protected FastFileStorageClient fastFileStorageClient;
 
     @Test
     public void testUpload() {
-        String path = "C:\\Users\\zhijun\\Desktop\\pics\\1.jpg";
+        String path = "C:\\Users\\geek\\Desktop\\png.。\\无标题·.png";
         File file = new File(path);
 
         try {
-            StorePath storePath = this.storageClient.uploadFile(FileUtils.openInputStream(file), file.length(), "jpg", null);
+            StorePath storePath = this.fastFileStorageClient.uploadFile(FileUtils.openInputStream(file), file.length(), "jpg", null);
 
-            System.out.println(storePath);// StorePath [group=group1, path=M00/00/00/wKgfUV2GJSuAOUd_AAHnjh7KpOc1.1.jpg]
-            System.out.println(storePath.getFullPath());//group1/M00/00/00/wKgfUV2GJSuAOUd_AAHnjh7KpOc1.1.jpg
+            System.out.println(storePath);// StorePath [group=group1, path=M00/00/00/wKghgF9sBBSAbsyvAELG45c6F4o645.jpg]
+            System.out.println(storePath.getFullPath());// group1/M00/00/00/wKghgF9sBBSAbsyvAELG45c6F4o645.jpg
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 }

@@ -28,6 +28,13 @@ public class VideoController {
     @Autowired
     private VideoMQService videoMQService;
 
+    /**
+     * 保存视频。
+     *
+     * @param picFile   oss。
+     * @param videoFile FastDFS。
+     * @return
+     */
     @PostMapping
     public ResponseEntity<Void> saveVideo(@RequestParam(value = "videoThumbnail", required = false) MultipartFile picFile,
                                           @RequestParam(value = "videoFile", required = false) MultipartFile videoFile) {
@@ -42,6 +49,7 @@ public class VideoController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
@@ -66,6 +74,7 @@ public class VideoController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
@@ -82,6 +91,7 @@ public class VideoController {
             // 发送消息。
             this.videoMQService.likeVideoMsg(videoId);
         }
+
         return entity;
     }
 
@@ -104,7 +114,12 @@ public class VideoController {
     }
 
     /**
-     * 评论列表。
+     * 查询评论列表。
+     *
+     * @param videoId
+     * @param page
+     * @param pagesize
+     * @return
      */
     @GetMapping("/{id}/comments")
     public ResponseEntity<PageResult> queryCommentsList(@PathVariable("id") String videoId,
@@ -131,6 +146,7 @@ public class VideoController {
             // 发送消息。
             this.videoMQService.commentVideoMsg(videoId);
         }
+
         return entity;
     }
 
@@ -172,6 +188,7 @@ public class VideoController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 
@@ -191,6 +208,7 @@ public class VideoController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 

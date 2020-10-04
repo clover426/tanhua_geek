@@ -29,6 +29,15 @@ public class ESUserLocationApiImpl implements IUserLocationApi {
     @Value("${es.server.url}")
     private String esServerUrl;
 
+    /**
+     * 更新用户地理位置。
+     *
+     * @param userId
+     * @param longitude
+     * @param latitude
+     * @param address
+     * @return
+     */
     @Override
     public String updateUserLocation(Long userId, Double longitude, Double latitude, String address) {
         try {
@@ -53,9 +62,16 @@ public class ESUserLocationApiImpl implements IUserLocationApi {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return null;
     }
 
+    /**
+     * 查询用户地理位置。
+     *
+     * @param userId
+     * @return
+     */
     @Override
     public UserLocationVo queryByUserId(Long userId) {
         String url = this.esServerUrl + "user/location/" + userId;
@@ -81,6 +97,7 @@ public class ESUserLocationApiImpl implements IUserLocationApi {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return null;
     }
 
@@ -119,10 +136,12 @@ public class ESUserLocationApiImpl implements IUserLocationApi {
                 userLocationVo.setLastUpdated(node.get("lastUpdated").asLong());
                 result.add(userLocationVo);
             }
+
             return result;
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return null;
     }
 
