@@ -20,7 +20,7 @@ public class RecommendUserApiImpl implements IRecommendUserApi {
     private MongoTemplate mongoTemplate;
 
     /**
-     * 今日佳人。
+     * 今日佳人。查询一位得分最高的推荐用户。
      *
      * @param userId
      * @return
@@ -36,7 +36,7 @@ public class RecommendUserApiImpl implements IRecommendUserApi {
     }
 
     /**
-     * 推荐用户的列表查询。
+     * 查询推荐用户列表。按照得分倒序。
      *
      * @param userId
      * @param pageNum
@@ -55,6 +55,13 @@ public class RecommendUserApiImpl implements IRecommendUserApi {
         return new PageInfo<>(0, pageNum, pageSize, recommendUsers);
     }
 
+    /**
+     * 查询推荐好友的缘分值。
+     *
+     * @param userId
+     * @param toUserId
+     * @return
+     */
     @Override
     public double queryScore(Long userId, Long toUserId) {
         Query query = Query.query(Criteria

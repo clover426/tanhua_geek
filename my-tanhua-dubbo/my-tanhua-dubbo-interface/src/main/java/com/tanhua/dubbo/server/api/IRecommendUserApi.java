@@ -6,7 +6,7 @@ import com.tanhua.dubbo.server.vo.PageInfo;
 public interface IRecommendUserApi {
 
     /**
-     * 查询一位得分最高的推荐用户。
+     * 今日佳人。查询一位得分最高的推荐用户。
      *
      * @param userId
      * @return
@@ -14,7 +14,7 @@ public interface IRecommendUserApi {
     RecommendUser queryMaxScore(Long userId);
 
     /**
-     * 按照得分倒序。
+     * 查询推荐用户列表。按照得分倒序。
      *
      * @param userId
      * @param pageNum

@@ -90,15 +90,16 @@ public class MovementsController {
     }
 
     /**
-     * 查询好友的动态信息。
+     * 查询好友动态信息。
      *
      * @param page
      * @param pageSize
      * @return
      */
     @GetMapping
-    public ResponseEntity<PageResult> queryPublishList(@RequestParam(value = "page", defaultValue = "1") Integer page,
-                                                       @RequestParam(value = "pagesize", defaultValue = "10") Integer pageSize) {
+    public ResponseEntity<PageResult> queryPublishList(
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "pagesize", defaultValue = "10") Integer pageSize) {
         try {
             PageResult pageResult = this.movementsService.queryUserPublishList(page, pageSize);
             return ResponseEntity.ok(pageResult);
@@ -117,8 +118,9 @@ public class MovementsController {
      * @return
      */
     @GetMapping("recommend")
-    public ResponseEntity<PageResult> queryRecommendPublishList(@RequestParam(value = "page", defaultValue = "1") Integer page,
-                                                                @RequestParam(value = "pagesize", defaultValue = "10") Integer pageSize) {
+    public ResponseEntity<PageResult> queryRecommendPublishList(
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "pagesize", defaultValue = "10") Integer pageSize) {
         try {
             PageResult pageResult = this.movementsService.queryRecommendPublishList(page, pageSize);
             return ResponseEntity.ok(pageResult);

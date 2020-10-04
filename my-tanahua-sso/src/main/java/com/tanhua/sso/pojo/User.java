@@ -17,6 +17,7 @@ public class User extends BasePojo {
 
 }
 
+
 /*
 
 CREATE TABLE `tb_user` (

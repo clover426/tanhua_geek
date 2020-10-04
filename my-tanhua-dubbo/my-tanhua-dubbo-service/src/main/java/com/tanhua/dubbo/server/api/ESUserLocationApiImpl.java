@@ -101,6 +101,13 @@ public class ESUserLocationApiImpl implements IUserLocationApi {
         return null;
     }
 
+    /**
+     * 根据地理位置查询用户。
+     *
+     * @param longitude
+     * @param latitude
+     * @return
+     */
     @Override
     public List<UserLocationVo> queryUserFromLocation(Double longitude, Double latitude, Integer range) {
         String url = this.esServerUrl + "user/location/list";

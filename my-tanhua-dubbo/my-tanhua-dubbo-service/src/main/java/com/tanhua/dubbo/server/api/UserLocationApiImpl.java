@@ -80,6 +80,13 @@ public class UserLocationApiImpl implements IUserLocationApi {
         return null;
     }
 
+    /**
+     * 根据地理位置查询用户。
+     *
+     * @param longitude
+     * @param latitude
+     * @return
+     */
     @Override
     public List<UserLocationVo> queryUserFromLocation(Double longitude, Double latitude, Integer range) {
         // 根据传入的坐标，进行确定中心点。

@@ -20,6 +20,12 @@ public class UsersService {
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
 
+    /**
+     * 发送验证码。
+     *
+     * @param token
+     * @return
+     */
     public Boolean sendVerificationCode(String token) {
         // 查询到用户的手机号。
         User user = this.userService.queryUserByToken(token);
@@ -49,6 +55,13 @@ public class UsersService {
         return false;
     }
 
+    /**
+     * 更新手机号。
+     *
+     * @param token
+     * @param newPhone
+     * @return
+     */
     public Boolean updateNewMobile(String token, String newPhone) {
         // 查询到用户的手机号。
         User user = this.userService.queryUserByToken(token);

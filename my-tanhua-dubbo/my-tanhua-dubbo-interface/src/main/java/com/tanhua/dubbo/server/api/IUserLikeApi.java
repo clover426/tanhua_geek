@@ -24,7 +24,7 @@ public interface IUserLikeApi {
     Boolean isMutualLike(Long userId, Long likeUserId);
 
     /**
-     * 删除用户喜欢。
+     * 取消用户喜欢。
      *
      * @param userId
      * @param likeUserId
@@ -35,6 +35,7 @@ public interface IUserLikeApi {
     /**
      * 查询相互喜欢的数量。
      *
+     * @param userId
      * @return
      */
     Long queryEachLikeCount(Long userId);
@@ -42,6 +43,7 @@ public interface IUserLikeApi {
     /**
      * 查询喜欢数。
      *
+     * @param userId
      * @return
      */
     Long queryLikeCount(Long userId);
@@ -49,6 +51,7 @@ public interface IUserLikeApi {
     /**
      * 查询粉丝数。
      *
+     * @param userId
      * @return
      */
     Long queryFanCount(Long userId);

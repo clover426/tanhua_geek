@@ -123,6 +123,12 @@ public class UserService {
         return isNew + " ~ " + token;
     }
 
+    /**
+     * 根据 Token 查询用户信息。
+     *
+     * @param token
+     * @return
+     */
     public User queryUserByToken(String token) {
         try {
             String redisTokenKey = "TOKEN_" + token;
@@ -140,6 +146,13 @@ public class UserService {
         return null;
     }
 
+    /**
+     * 修改手机号。
+     *
+     * @param id
+     * @param newPhone
+     * @return
+     */
     public Boolean updateNewMobile(Long id, String newPhone) {
         // 校验新手机号是否已经注册。
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();

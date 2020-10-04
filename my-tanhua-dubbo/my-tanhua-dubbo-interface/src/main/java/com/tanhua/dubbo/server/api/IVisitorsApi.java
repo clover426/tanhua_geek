@@ -16,7 +16,7 @@ public interface IVisitorsApi {
     String saveVisitor(Visitors visitors);
 
     /**
-     * 按照时间倒序排序，查询最近的访客信息。
+     * 查询最近的访客信息。按照时间倒序排序。
      *
      * @param userId
      * @param num
@@ -25,7 +25,7 @@ public interface IVisitorsApi {
     List<Visitors> topVisitor(Long userId, Integer num);
 
     /**
-     * 按照时间倒序排序，查询最近的访客信息。
+     * 查询最近的访客信息。按照时间倒序排序。
      *
      * @param userId
      * @param date
@@ -34,7 +34,7 @@ public interface IVisitorsApi {
     List<Visitors> topVisitor(Long userId, Long date);
 
     /**
-     * 按照时间倒序排序，查询最近的访客信息。
+     * 查询最近的访客信息。按照时间倒序排序。
      *
      * @param userId
      * @param page
